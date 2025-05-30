@@ -1,0 +1,2 @@
+MONGODB_URI="mongo connection url"
+CORS_ORIGIN="frontend url"
