@@ -17,7 +17,7 @@ async function saveTodo(req, res) {
 
 async function getAllTodos(req, res) {
   try {
-    const todos = await Todo.find().sort({ createdAt: -1 });
+    const todos = await Todo.find().sort({ createdAt: 1 });
 
     return res.status(200).json({ success: true, todos });
   } catch (error) {
@@ -89,4 +89,33 @@ async function updateTodo(req, res) {
   }
 }
 
-export { saveTodo, getAllTodos, deleteTodo, updateTodo };
+async function changeChecked(req, res) {
+  try {
+    const { id } = req.params;
+    const { completed } = req.body;
+
+    const updatedTodo = await Todo.findByIdAndUpdate(
+      id,
+      { $set: { completed } },
+      { new: true }
+    );
+
+    if (!updatedTodo) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Failed to update!" });
+    }
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Update successful", updatedTodo });
+  } catch (error) {
+    console.error("Updation failed:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+}
+
+export { saveTodo, getAllTodos, deleteTodo, updateTodo, changeChecked };

@@ -16,7 +16,7 @@ const TodoInput = ({
     <form className="flex gap-2">
       <input
         onChange={handleChange}
-        className="bg-neutral-800 outline-none border-2 focus:border-neutral-400 border-neutral-600 text-white rounded-md p-5 w-full h-12"
+        className="bg-neutral-800 outline-none border-2 focus:border-neutral-400 border-neutral-600 text-white rounded-md p-5 w-full h-14"
         type="text"
         value={todoInput}
         placeholder="Create Todo"

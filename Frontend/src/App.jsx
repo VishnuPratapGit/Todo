@@ -63,9 +63,24 @@ function App() {
     setUpdate(false);
   };
 
+  const changeCompleted = async (e, id) => {
+    const value = e.target.checked;
+
+    setUpdateId(id);
+    const updatedData = await todoServices.updateCheckTodo(id, value);
+
+    if (updatedData) {
+      todoServices.getTodos().then((todosData) => {
+        if (todosData) {
+          setTodos(todosData);
+        }
+      });
+    }
+  };
+
   return (
     <div className="w-full h-screen pt-10">
-      <div className="mx-auto w-1/2 border-2 bg-slate-200 border-neutral-600 rounded-lg p-4">
+      <div className="mx-auto w-1/2 border-2 bg-slate-100 border-neutral-600 rounded-lg p-4">
         <TodoInput
           todoInput={todoInput}
           setTodoInput={setTodoInput}
@@ -78,6 +93,7 @@ function App() {
           todos={todos}
           updateTodo={updateTodo}
           deleteTodo={deleteTodo}
+          changeCompleted={changeCompleted}
         />
       </div>
     </div>

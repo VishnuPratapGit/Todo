@@ -100,6 +100,34 @@ class TodoServices {
       return false;
     }
   }
+
+  async updateCheckTodo(id, completed) {
+    try {
+      const response = await fetch(
+        `${this.BASE_URL}/api/v1/todo/complete-todo/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ completed }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Something went wrong");
+        return false;
+      }
+
+      return data.updatedTodo;
+    } catch (error) {
+      console.log("Request not sent: ", error);
+      alert("Request not sent");
+      return false;
+    }
+  }
 }
 
 const todoServices = new TodoServices();
